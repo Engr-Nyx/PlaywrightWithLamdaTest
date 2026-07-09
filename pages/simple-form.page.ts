@@ -14,9 +14,9 @@ export class SimpleFormDemoPage extends BasePage {
     this.displayMessage = page.locator('#message');
   }
 
-  async validateDisplayedMessage(expectedMessage: string) {
+  async validateDisplayedMessage(expectedMessage: string, options?: { timeout?: number }) {
     await test.step(`Validate that the right-hand panel displays: "${expectedMessage}"`, async () => {
-      await expect(this.displayMessage).toHaveText(expectedMessage);
+      await expect(this.displayMessage).toHaveText(expectedMessage, options);
     });
   }
 }
