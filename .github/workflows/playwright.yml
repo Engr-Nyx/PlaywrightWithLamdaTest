@@ -4,8 +4,9 @@ on:
     branches: [ main, master ]
 
 permissions:
-  contents: write
-
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   test:
     environment: ENV
@@ -29,9 +30,17 @@ jobs:
           LT_USERNAME: ${{ secrets.LT_USERNAME }}
           LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
 
-      - name: Deploy Playwright report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Setup Pages
         if: always()
+        uses: actions/configure-pages@v4
+        
+      - name: Upload Pages artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: playwright-report
+          path: playwright-report/
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        id: deployment
+        uses: actions/deploy-pages@v4
