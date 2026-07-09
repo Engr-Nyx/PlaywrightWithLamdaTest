@@ -5,6 +5,7 @@ on:
 
 jobs:
   test:
+    environment: ENV
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -21,6 +22,9 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
+        env:
+          LT_USERNAME: ${{ secrets.LT_USERNAME }}
+          LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
 
       - name: Deploy Playwright report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
