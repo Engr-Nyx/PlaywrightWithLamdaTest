@@ -1,0 +1,1 @@
+export const baseURL = "https://www.testmuai.com/selenium-playground/"
