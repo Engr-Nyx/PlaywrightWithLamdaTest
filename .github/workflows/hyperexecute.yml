@@ -8,6 +8,7 @@ on:
 
 jobs:
   hyperexecute-run:
+    environment: ENV
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
