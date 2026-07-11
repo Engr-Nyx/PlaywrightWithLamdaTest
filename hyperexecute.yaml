@@ -6,7 +6,7 @@ testSuiteTimeout: 90
 testSuiteStep: 90
 
 matrix:
-  os: [win, linux]
+  os: [win, linux, mac]
   specs: ["tests/playground.spec.ts"]
 
 cacheKey: '{{ checksum "package-lock.json" }}'
@@ -15,6 +15,7 @@ cacheDirectories:
 
 pre:
   - npm ci
+  - npx playwright install --with-deps
 
 testSuites:
   - npx playwright test $specs
