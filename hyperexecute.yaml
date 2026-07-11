@@ -1,12 +1,12 @@
 version: 0.1
-runson: win
+runson: ${matrix.os}
 
 globalTimeout: 90
 testSuiteTimeout: 90
 testSuiteStep: 90
 
 matrix:
-  os: [win]
+  os: [win, linux]
   specs: ["tests/playground.spec.ts"]
 
 cacheKey: '{{ checksum "package-lock.json" }}'
