@@ -14,11 +14,25 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Download & Run HyperExecute CLI
+      - name: Download HyperExecute CLI
+        run: |
+          curl -sSL https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute -o hyperexecute
+          chmod +x hyperexecute
+
+      - name: Verify credentials are set
+        env:
+          LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
+          LT_USERNAME: ${{ secrets.LT_USERNAME }}
+        run: |
+          if [ -z "$LT_ACCESS_KEY" ] || [ -z "$LT_USERNAME" ]; then
+            echo "::error::LT_USERNAME or LT_ACCESS_KEY is empty. Check that both secrets exist under Settings > Environments > ENV."
+            exit 1
+          fi
+          echo "Credentials present. Key length: ${#LT_ACCESS_KEY}"
+
+      - name: Run HyperExecute
         env:
           LT_USERNAME: ${{ secrets.LT_USERNAME }}
           LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
         run: |
-          curl https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute -o hyperexecute
-          chmod +x hyperexecute
-          ./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config hyperexecute.yaml
+          ./hyperexecute --user "$LT_USERNAME" --key "$LT_ACCESS_KEY" --config hyperexecute.yaml
