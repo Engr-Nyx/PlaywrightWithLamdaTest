@@ -87,34 +87,34 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: process.env.HYPEREXECUTE === 'true'
     ? [
-        {
-          name: 'chromium',
-          use: { ...devices['Desktop Chrome'] },
-        },
-        {
-          name: 'firefox',
-          use: { ...devices['Desktop Firefox'] },
-        },
-      ]
+      {
+        name: 'chromium',
+        use: { ...devices['Desktop Chrome'] },
+      },
+      {
+        name: 'firefox',
+        use: { ...devices['Desktop Firefox'] },
+      },
+    ]
     : [
-        ...lambdaTestCombos.map((combo) => ({
-          name: combo.projectName,
-          use: {
-            connectOptions: {
-              wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(
-                JSON.stringify(
-                  getCapability({
-                    platform: combo.platform,
-                    browserName: combo.browserName,
-                    browserVersion: combo.browserVersion,
-                    name: `Playwright Test - ${combo.projectName}`,
-                  })
-                )
-              )}`,
-            },
+      ...lambdaTestCombos.map((combo) => ({
+        name: combo.projectName,
+        use: {
+          connectOptions: {
+            wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(
+              JSON.stringify(
+                getCapability({
+                  platform: combo.platform,
+                  browserName: combo.browserName,
+                  browserVersion: combo.browserVersion,
+                  name: `Playwright Test - ${combo.projectName}`,
+                })
+              )
+            )}`,
           },
-        })),
-      ],
+        },
+      })),
+    ],
 
   /* Run your local dev server before starting the tests */
   // webServer: {
