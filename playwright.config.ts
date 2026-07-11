@@ -38,7 +38,7 @@ function getCapability(opts: {
       accessKey: LT_ACCESS_KEY,
       video: true,
       network: true,
-      tunnel: true,
+      tunnel: process.env.HYPEREXECUTE === 'true' ? false : true,
       console: true,
     },
   };

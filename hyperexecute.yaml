@@ -26,6 +26,7 @@ env:
   LT_USERNAME: ${LT_USERNAME}
   LT_ACCESS_KEY: ${LT_ACCESS_KEY}
   TEST_ENV: "production"
+  HYPEREXECUTE: "true"
 
 mergeArtifacts: true
 uploadArtefacts:
