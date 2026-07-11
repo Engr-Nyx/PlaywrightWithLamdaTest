@@ -23,8 +23,8 @@ post:
   - echo "HyperExecute Playwright tests execution completed."
 
 env:
-  LT_USERNAME: ${{ .secrets.LT_USERNAME }}
-  LT_ACCESS_KEY: ${{ .secrets.LT_ACCESS_KEY }}
+  LT_USERNAME: ${LT_USERNAME}
+  LT_ACCESS_KEY: ${LT_ACCESS_KEY}
   TEST_ENV: "production"
 
 mergeArtifacts: true
