@@ -1,17 +1,9 @@
-name: Playwright Tests
-on:
-  push:
-    branches: [ main, master ]
-
 permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-  
 jobs:
   test:
     environment: ENV
@@ -38,7 +30,16 @@ jobs:
       - name: Setup Pages
         if: always()
         uses: actions/configure-pages@v4
-        
+
+      - name: Delete stale github-pages artifacts (from re-runs)
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" --paginate \
+            | jq -r '.artifacts[] | select(.name=="github-pages") | .id' \
+            | xargs -r -I{} gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/{}"
+
       - name: Upload Pages artifact
         if: always()
         uses: actions/upload-pages-artifact@v3
